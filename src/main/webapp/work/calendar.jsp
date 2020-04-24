@@ -9,7 +9,6 @@
 <%
     String contextPath = request.getContextPath();
     SWBScriptEngine eng=DataMgr.initPlatform("/admin/ds/admin.js", session);
-    //eng.getDataSource("").fetchObjById(id)
 %>
 <!DOCTYPE html>
 <html>

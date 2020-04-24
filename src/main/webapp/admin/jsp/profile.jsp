@@ -7,8 +7,6 @@
     SWBScriptEngine eng = DataMgr.initPlatform("/admin/ds/datasources.js", session);
     DataObject user = eng.getUser();
     
-    
-    String auth_type = eng.getConfigData().getString("AUTH_TYPE","DEFAULT"); 
     String fullname=request.getParameter("fullname");
     String email=request.getParameter("email");
     String password=request.getParameter("password");
@@ -17,11 +15,11 @@
     String msg=null;
     String style="";
     
-    if(fullname!=null && email!=null )
+    if(fullname!=null && email!=null && password!=null && password.equals(password2))
     {
         user.addParam("fullname", fullname);
         user.addParam("email", email);
-        if(auth_type.equals("DEFAULT")&& password!=null && password.equals(password2)) user.addParam("password", password);
+        user.addParam("password", password);
         eng.getDataSource("User").updateObj(user);
         msg="Perfil actualizado...";   
         style="color: white;background: #00aa52;padding: 10px;";
@@ -53,7 +51,7 @@
             <!-- Profile Image -->
             <div class="box box-primary">
                 <div class="box-body box-profile">
-                    <img class="profile-user-img img-responsive img-circle" src="<%=contextPath%><%=user.getString("photo","/admin/img/user.jpg")%>" alt="User profile picture">
+                    <img class="profile-user-img img-responsive img-circle" src="<%=contextPath%>/admin/img/user.jpg" alt="User profile picture">
                     <h3 class="profile-username text-center"><%=user.getString("fullname")%></h3>
                     <!--<p class="text-muted text-center">Software Engineer</p>-->
                 </div><!-- /.box-body -->
@@ -79,7 +77,6 @@
                                     <input type="text" class="form-control" name="email" id="email" placeholder="Correo electrónico" value="<%=user.getString("email")%>">
                                 </div>
                             </div>
-                                    <% if(auth_type.equals("DEFAULT")) { %>
                             <div class="form-group">
                                 <label for="password" class="col-sm-4 control-label">Contraseña</label>
                                 <div class="col-sm-8">
@@ -93,8 +90,7 @@
                                     <input type="password" name="password2" id="confirmPassword" data-match="#inputPassword" data-match-error="La contraseñas no coinciden" class="form-control" placeholder="Confirmar contraseña">
                                 </div>
                                 <div class="help-block with-errors col-sm-offset-4 col-sm-8"></div>
-                            </div> 
-                                        <%  }  %>
+                            </div>    
                             <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-8">
                                     <button type="submit" class="btn btn-primary" onclick="return this.attributes['class'].value.indexOf('disabled')==-1;">Enviar</button>

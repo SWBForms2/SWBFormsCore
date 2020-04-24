@@ -2,7 +2,8 @@
     Document   : index
     Created on : 15-abr-2017, 12:26:32
     Author     : javiersolis
---%><%@page import="org.semanticwb.swbforms.authentication.UserLogin"%><%@page contentType="text/html" pageEncoding="UTF-8"%><%@page import="org.semanticwb.datamanager.utils.TokenGenerator"%><%@page import="org.semanticwb.datamanager.*"%><%
+--%><%@page contentType="text/html" pageEncoding="UTF-8"%><%@page import="org.semanticwb.datamanager.utils.TokenGenerator"%>
+<%@page import="org.semanticwb.datamanager.*"%><%
     String contextPath = request.getContextPath();
     SWBScriptEngine eng=DataMgr.initPlatform("/WEB-INF/global.js",session);
     String email=request.getParameter("email");
@@ -28,10 +29,22 @@
     }
     if(email!=null && password!=null)
     {        
-        UserLogin usrLogin = new UserLogin(eng);
+        SWBDataSource ds=eng.getDataSource("User");  
+        DataObject r=new DataObject();
+        DataObject data=new DataObject();
+        r.put("data", data);
+        data.put("email", email);
+        data.put("password", password);
+        //System.out.println("query"+r);
+        DataObject ret=ds.fetch(r);
+        //System.out.println("model:"+ds.getModelId());
+ 
+        DataList rdata=ret.getDataObject("response").getDataList("data");
         
-        DataObject user=usrLogin.getUserByEmail(email,password);
-        if(null!=user){
+        //System.out.println("ret"+ret);
+        if(!rdata.isEmpty())
+        {
+            DataObject user=rdata.getDataObject(0);
             session.setAttribute("_USER_", user);
             String path=(String)request.getAttribute("servletPath");
             if(path==null || path.equals("/login"))path="/";
@@ -45,43 +58,10 @@
             
             response.sendRedirect(contextPath+path);
             return;
-        } else {
+        }else
+        {
             errorMgs="Error al validar credenciales...";
         }
-        ///////////////////////////
-//        SWBDataSource ds=eng.getDataSource("User");  
-//        DataObject r=new DataObject();
-//        DataObject data=new DataObject();
-//        r.put("data", data);
-//        data.put("email", email);
-//        data.put("password", password);
-//        //System.out.println("query"+r);
-//        DataObject ret=ds.fetch(r);
-//        //System.out.println("model:"+ds.getModelId());
-// 
-//        DataList rdata=ret.getDataObject("response").getDataList("data");
-//        
-//        //System.out.println("ret"+ret);
-//        if(!rdata.isEmpty())
-//        {
-//            DataObject user=rdata.getDataObject(0);
-//            session.setAttribute("_USER_", user);
-//            String path=(String)request.getAttribute("servletPath");
-//            if(path==null || path.equals("/login"))path="/";
-//            
-//            if(remember)
-//            {
-//                Cookie c=new Cookie("swbf",TokenGenerator.nextTokenByUserId(user.getNumId()));
-//                c.setMaxAge(60*60*24*365);
-//                response.addCookie(c);
-//            }             
-//            
-//            response.sendRedirect(contextPath+path);
-//            return;
-//        }else
-//        {
-//            errorMgs="Error al validar credenciales...";
-//        }
     }else
     {
 /*        

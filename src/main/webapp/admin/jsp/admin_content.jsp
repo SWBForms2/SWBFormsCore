@@ -202,7 +202,6 @@
     String t=request.getParameter("t");
     String a=request.getParameter("a");
     //Split path
-    
     DataList<String> paths=getContentPaths(request.getParameterValues("p"),request.getParameter("id"));
     String p=getParams(paths);
     

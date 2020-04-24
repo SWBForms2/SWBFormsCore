@@ -263,7 +263,6 @@
                     File[] files = d.listFiles();
                     Arrays.sort(files);
                     for (int x = 0; files!=null && x < files.length; x++) {
-                        if(files[x].isDirectory()) continue; 
                         if (filename != null && filename.equals(files[x].getName())) {
                             selected = "selected";
                             fselected = true;

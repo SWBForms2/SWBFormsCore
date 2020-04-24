@@ -215,13 +215,13 @@
                             </li>                             
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="<%=contextPath%><%=user.getString("photo","/admin/img/user.jpg")%>" class="user-image" alt="User Image"/>
+                                    <img src="<%=contextPath%>/admin/img/user.jpg" class="user-image" alt="User Image"/>
                                     <span class="hidden-xs"><%=user.getString("fullname")%></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
                                     <li class="user-header">
-                                        <img src="<%=contextPath%><%=user.getString("photo","/admin/img/user.jpg")%>" class="img-circle" alt="User Image" />
+                                        <img src="<%=contextPath%>/admin/img/user.jpg" class="img-circle" alt="User Image" />
                                         <p>
                                             <%=user.getString("fullname")%>
                                             <small>Miembro desde: <%=user.getDateFormated("created",new Date(),"d MMMM yyyy")%></small>
@@ -277,7 +277,7 @@
             </div><!-- /.content-wrapper -->
             <footer class="main-footer hidden-xs">
                 <div class="pull-right hidden-xs">
-                    <b>Version</b> <%=eng.getConfigData().getString("version","0.1")%>
+                    <b>Version</b> 0.1
                 </div>
                 <strong>Copyright &copy; 2015-2020 <a href="<%=eng.getConfigData().getString("appURL","#")%>"><%=eng.getAppName()%></a>.</strong> All rights reserved.
             </footer>

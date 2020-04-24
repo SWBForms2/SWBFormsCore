@@ -87,10 +87,7 @@ eng.dataSources["User"]={
     dataStore: _dataStore,  
     displayField: "fullname",
     fields:[
-        {name:"fullname",title:"Nombre Completo",type:"string"},
-        {name:"name",title:"Nombre",type:"string"},
-        {name:"lastName",title:"Apellido paterno",type:"string"},
-        {name:"secondLastName",title:"Apellido materno",type:"string"},
+        {name:"fullname",title:"Nombre",type:"string"},
         {name:"password",title:"Contraseña",type:"password"},
         {name:"email",title:"Correo electrónico",type:"string", validators:[{stype:"unique"}]},
         {name:"roles",title:"Roles",stype:"select", valueMap:roles, multiple:true},
